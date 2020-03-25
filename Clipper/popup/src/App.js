@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import led_red from './led_red.png';
-import led_green from './led_green.png';
-import led_orange from './led_orange.png';
+const led_red = '#ff0000';
+const led_green = 'green';
+const led_orange = 'orange';
 
 const { connect } = require('react-redux');
 const { bridge } = require('./bridge');
@@ -310,7 +310,7 @@ class AppComponent extends Component {
 
 			msg = `Service status: ${msg}`;
 
-			return <div className="StatusBar"><img alt={foundState} className="Led" src={led}/><span className="ServerStatus">{ msg }{ helpLink }</span></div>;
+			return <div className="StatusBar"><div className="Led"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"><title>{foundState}</title><circle cx="50" cy="50" r="50" stroke="black" strokeWidth="1" fill={ led } /></svg></div><span className="ServerStatus">{ msg }{ helpLink }</span></div>;
 		};
 
 		const foldersComp = () => {
