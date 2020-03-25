@@ -212,7 +212,7 @@ class MainScreenComponent extends React.Component {
 			const folderItems = this.props.folders;
 			const startFolders = folderItems
 				.map(a => {
-					return { key: a.id, value: a.id, label: a.title };
+					return { key: a.id, value: a.id, label: a.title, indentDepth: a.parent_id == '' ? 0 : 1 };
 				});
 
 			this.setState({
