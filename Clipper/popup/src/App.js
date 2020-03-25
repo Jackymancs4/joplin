@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-const led_red = '#ff0000';
-const led_green = 'green';
-const led_orange = 'orange';
+const led_red = '#FF0000';
+const led_green = '#008000';
+const led_orange = '#FFA500';
 
 const { connect } = require('react-redux');
 const { bridge } = require('./bridge');
