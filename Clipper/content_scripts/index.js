@@ -372,6 +372,12 @@
 			const ok = isProbablyReaderable(documentForReadability());
 			return { name: 'isProbablyReaderable', value: ok };
 
+		} else if (command.name === 'hasSomethingSelected') {
+
+			// eslint-disable-next-line no-undef
+			const ok = window.getSelection().type == 'Range'; // https://developer.mozilla.org/en-US/docs/Web/API/Selection/type
+			return { name: 'hasSomethingSelected', value: ok };
+
 		} else if (command.name === 'completePageHtml') {
 
 			hardcodePreStyles(document);

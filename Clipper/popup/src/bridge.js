@@ -61,6 +61,10 @@ class Bridge {
 			if (command.name === 'isProbablyReaderable') {
 				this.dispatch({ type: 'IS_PROBABLY_READERABLE', value: command.value });
 			}
+
+			if (command.name === 'hasSomethingSelected') {
+				this.dispatch({ type: 'HAS_SOMETHING_SELECTED', value: command.value });
+			}
 		};
 		this.browser_.runtime.onMessage.addListener(this.browser_notify);
 		const backgroundPage = await this.backgroundPage(this.browser_);

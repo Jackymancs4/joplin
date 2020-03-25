@@ -45,6 +45,11 @@ function reducer(state = defaultState, action) {
 		newState = Object.assign({}, state);
 		newState.isProbablyReaderable = action.value;
 
+	} else if (action.type === 'HAS_SOMETHING_SELECTED') {
+
+		newState = Object.assign({}, state);
+		newState.hasSomethingSelected = action.value;
+
 	} else if (action.type === 'CLIPPED_CONTENT_SET') {
 
 		newState = Object.assign({}, state);

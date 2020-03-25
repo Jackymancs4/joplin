@@ -227,6 +227,8 @@ class AppComponent extends Component {
 		}
 
 		bridge().sendCommandToActiveTab({ name: 'isProbablyReaderable' });
+		bridge().sendCommandToActiveTab({ name: 'hasSomethingSelected' });
+
 	}
 
 	componentDidUpdate() {
@@ -377,6 +379,12 @@ class AppComponent extends Component {
 			simplifiedPageButtonLabel += ' ⚠️';
 			simplifiedPageButtonTooltip = 'It might not be possible to create a good simplified version of this page.\nYou may want to clip the complete page instead.';
 		}
+		let selectionButtonLabel = 'Clip selection';
+		let selectionButtonTooltip = '';
+		if (!this.props.hasSomethingSelected) {
+			selectionButtonLabel += ' ⚠️';
+			selectionButtonTooltip = 'It seems nothing is currently selected.';
+		}
 
 		return (
 			<div className="App">
@@ -385,7 +393,7 @@ class AppComponent extends Component {
 						<li><a className="Button" href="#" onClick={this.clipSimplified_click} title={simplifiedPageButtonTooltip}>{simplifiedPageButtonLabel}</a></li>
 						<li><a className="Button" href="#" onClick={this.clipComplete_click}>Clip complete page</a></li>
 						<li><a className="Button" href="#" onClick={this.clipCompleteHtml_click}>Clip complete page (HTML) (Beta)</a></li>
-						<li><a className="Button" href="#" onClick={this.clipSelection_click}>Clip selection</a></li>
+						<li><a className="Button" href="#" onClick={this.clipSelection_click} title={selectionButtonTooltip}>{selectionButtonLabel}</a></li>
 						<li><a className="Button" href="#" onClick={this.clipScreenshot_click}>Clip screenshot</a></li>
 						<li><a className="Button" href="#" onClick={this.clipUrl_click}>Clip URL</a></li>
 					</ul>
@@ -417,6 +425,8 @@ const mapStateToProps = (state) => {
 		tags: state.tags,
 		selectedFolderId: state.selectedFolderId,
 		isProbablyReaderable: state.isProbablyReaderable,
+		hasSomethingSelected: state.hasSomethingSelected,
+
 	};
 };
 
