@@ -365,7 +365,7 @@ class MainScreenComponent extends React.Component {
 					onRevisionLinkClick: command.onRevisionLinkClick,
 				},
 			});
-		} else if (command.name === 'commandMarkdownTable') {
+		} else if (command.name === 'showMarkdownTable') {
 			this.setState({
 				markdownTableDialogOptions: {
 					noteId: command.noteId,

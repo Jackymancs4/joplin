@@ -4,12 +4,12 @@ const { useState, useRef } = require('react');
 const { themeStyle } = require('../theme.js');
 const { _ } = require('lib/locale.js');
 
-let promise;
+let outsideResolve;
 
-const getMarkdown = async () => {
-	const str = await promise;
-	console.log(str);
-	return str;
+const getMarkdown = () => {
+	return new Promise(function(resolve) {
+		outsideResolve = resolve;
+	});
 };
 
 const MarkdownTable = (props) => {
@@ -17,21 +17,25 @@ const MarkdownTable = (props) => {
 	const theme = themeStyle(props.theme);
 
 	const styles_ = {
+		page: {
+			minWidth: 'unset',
+		},
+		title: {
+			margin: '1.2em',
+		},
 		table: {
-			maxWidth: 400,
 			borderSpacing: 1,
 			borderCollapse: 'unset',
 			backgroundColor: theme.backgroundColor,
 			cursor: 'pointer',
+			margin: '1.2em',
+			marginBottom: '0',
 		},
 	};
 
 	const [x, setX] = useState(0);
 	const [y, setY] = useState(0);
 	const tableEl = useRef(null);
-	const wrapperRef = useRef(null);
-	// const refWrapper = useRef(initialValue);
-
 
 	const _onMouseMove = (event) => {
 		const table = tableEl.current;
@@ -70,32 +74,33 @@ const MarkdownTable = (props) => {
 
 
 	const getMarkdownRule = () => {
-		const array = [];
-		let str = '',
+		let tableString = '',
 			i = 0,
 			j = 0;
 		// every table should have a heading
-		for (i = 1; i <= 2; i++) {
-			for (j = 1; j <= x; j++) {
-				str += i === 1 ? '|     ' : '| --- ';
-			}
-			str += '|';
-			array.push(str);
-			str = '';
-		}
 
+		// Header
+		for (j = 1; j <= x; j++) {
+			tableString += '|     ';
+		}
+		tableString += '|\n';
+
+		// Separator
+		for (j = 1; j <= x; j++) {
+			tableString += '| --- ';
+		}
+		tableString += '|\n';
+
+		// Body
 		for (i = 1; i <= y; i++) {
 			for (j = 1; j <= x; j++) {
-				str += '|     ';
+				tableString += '|     ';
 			}
-			str += '|';
-			array.push(str);
-			str = '';
+			tableString += '|\n';
 		}
-		str = array.join('\n');
-		promise = new Promise(resolve => resolve(str));
-		return (str);
-		// this.promise = new Promise(resolve=> resolve(str));
+
+		outsideResolve(tableString);
+		return tableString;
 	};
 
 	const closeDialog = () => {
@@ -105,15 +110,23 @@ const MarkdownTable = (props) => {
 	};
 
 	const onClickHandler = () => {
-		console.log(getMarkdownRule());
+		getMarkdownRule();
 		closeDialog();
 
 	};
-	return (
-		<div style={theme.dialogModalLayer}>
-			<div className="wrapperdiv" style={theme.dialogBox} ref={wrapperRef}>
-				<div style={theme.dialogTitle}>{_(`Rows:${y} Columns:${x}`)}</div>
 
+	const onCancelClickHandler = () => {
+		outsideResolve('');
+		closeDialog();
+	};
+
+
+	return (
+		<div className="smalltalk">
+			<div className="page" style={styles_.page}>
+				<div style={styles_.title}>
+					<div style={theme.dialogTitle}>{_(`Rows: ${y} Columns: ${x}`)}</div>
+				</div>
 				<table
 					className="tableEl"
 					style={styles_.table}
@@ -122,131 +135,23 @@ const MarkdownTable = (props) => {
 					ref={tableEl}
 				>
 					<tbody>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
-						<tr>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-							<td onClick={onClickHandler}> </td>
-						</tr>
+						{Array(10).fill().map(() => {
+							return <tr>
+								{Array(10).fill().map(() => {
+									return <td onClick={onClickHandler}></td>;
+								})}
+							</tr>;
+						})}
+
 					</tbody>
 				</table>
-				<button onClick={onClickHandler}>
-					{'Close'}
-				</button>
+				<div className="action-area">
+					<div className="button-strip">
+						<button style={theme.button} onClick={onCancelClickHandler}>
+							{'Cancel'}
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

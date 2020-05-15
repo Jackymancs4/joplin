@@ -143,7 +143,16 @@ export default function Toolbar(props:ToolbarProps) {
 				});
 			},
 		});
-
+		toolbarItems.push({
+			tooltip: _('Table'),
+			iconName: 'fa-table',
+			onClick: async () => {
+				props.dispatch({
+					type: 'WINDOW_COMMAND',
+					name: 'commandMarkdownTable',
+				});
+			},
+		});
 		toolbarItems.push({
 			tooltip: _('Insert Date Time'),
 			iconName: 'fa-calendar-plus-o',
