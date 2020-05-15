@@ -278,7 +278,7 @@ function AceEditor(props: NoteBodyEditorProps, ref: any) {
 					const commands: any = {
 						textBold: () => wrapSelectionWithStrings('**', '**', _('strong text')),
 						textItalic: () => wrapSelectionWithStrings('*', '*', _('emphasized text')),
-						commandMarkdownTable: async () => {
+						textMarkdownTable: async () => {
 							props.dispatch({
 								type: 'WINDOW_COMMAND',
 								name: 'showMarkdownTable',
