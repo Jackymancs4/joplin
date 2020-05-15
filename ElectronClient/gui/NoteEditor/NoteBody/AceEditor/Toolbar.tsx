@@ -149,7 +149,7 @@ export default function Toolbar(props:ToolbarProps) {
 			onClick: async () => {
 				props.dispatch({
 					type: 'WINDOW_COMMAND',
-					name: 'commandMarkdownTable',
+					name: 'textMarkdownTable',
 				});
 			},
 		});

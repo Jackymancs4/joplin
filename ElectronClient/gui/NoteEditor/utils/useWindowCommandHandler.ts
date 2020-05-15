@@ -42,7 +42,7 @@ export default function useWindowCommandHandler(dependencies:HookDependencies) {
 				'textCheckbox',
 				'textHeading',
 				'textHorizontalRule',
-				'commandMarkdownTable',
+				'textMarkdownTable',
 			];
 
 			if (directMapCommands.includes(command.name)) {

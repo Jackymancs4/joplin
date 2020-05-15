@@ -53,16 +53,13 @@ const MarkdownTable = (props) => {
 
 		const col = Math.floor((oX / width) * 10) + 1;
 		const row = Math.floor((oY / height) * 10) + 1;
-		//   console.log(`X->${event.nativeEvent.offsetX} Y->${event.nativeEvent.offsetY}`);
 
 		setX(col);
 		setY(row);
-		// console.log(this.refs);
 		if (table) {
 			for (let j = 0; j < table.rows.length; j++) {
 				for (let i = 0; i < table.rows[j].cells.length; i++) {
 					if (j < row && i < col) {
-						// console.log('do we ever come here')
 						table.rows[j].cells[i].style.background = '#DEF';
 					} else {
 						table.rows[j].cells[i].style.background = theme.backgroundColor;
@@ -120,7 +117,6 @@ const MarkdownTable = (props) => {
 		closeDialog();
 	};
 
-
 	return (
 		<div className="smalltalk">
 			<div className="page" style={styles_.page}>
@@ -136,13 +132,16 @@ const MarkdownTable = (props) => {
 				>
 					<tbody>
 						{Array(10).fill().map(() => {
-							return <tr>
-								{Array(10).fill().map(() => {
-									return <td onClick={onClickHandler}></td>;
-								})}
-							</tr>;
+							return (
+								<tr>
+									{Array(10).fill().map(() => {
+										return (
+											<td onClick={onClickHandler}></td>
+										);
+									})}
+								</tr>
+							);
 						})}
-
 					</tbody>
 				</table>
 				<div className="action-area">
@@ -155,7 +154,6 @@ const MarkdownTable = (props) => {
 			</div>
 		</div>
 	);
-
 };
 
 module.exports = {
